@@ -1,0 +1,352 @@
+@font-face {
+  font-family: Authentic Sans;
+  src: url(/css/authentic/woff/authenticsans-130.woff2) format('woff2'),
+      url(/css/authentic/woff/authenticsans-130.woff) format('woff');
+}
+
+:root {
+
+  --neonGreen: #00FF38;
+  --mainPurple: #8000FF;
+  --mainGrey: #C4C4C4;
+
+}
+
+body {
+  background: black;
+  font-family: Authentic Sans;
+  
+}
+
+.container{
+  width: 100%;
+  height: 100%;
+}
+
+.TOP-BAR-GRID{
+  top: 0px;
+  padding-top: 10px;
+  z-index: 1;
+}
+
+.app-title {
+  color: white;
+}
+
+/* COUNTRY DROPDOWN */
+.country-selector {
+  position: relative;
+  margin-left: 30px;
+  color: white;
+}
+
+.country-selector select {
+
+}
+
+
+
+/* BUTTONS */
+
+.iGrid{
+  position:fixed;
+  z-index:2;
+ 
+}
+
+#iBtn {
+  background-color: transparent;
+  color: white;
+  font-size: 25px;
+  padding: 0 2px 0 2px;
+  border: 2px solid white;
+  border-radius: 30px; 
+  z-index: 2;
+}
+#iBtn:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#talkBtn {
+  background-color: transparent;
+  color: var(--neonGreen);
+  font-size: 60px;
+  border: none;
+  margin-right: 20px;
+  bottom:10px;
+  z-index: 1;
+
+}
+#talkBtn:hover {
+  opacity: 80%;
+  cursor: pointer;
+}
+
+#whatBtn {
+  background-color: transparent;
+  color: var(--mainPurple);
+  font-size: 60px;
+  border: none;
+  margin-left: 10px;
+  z-index: 1;
+}
+#whatBtn:hover {
+  opacity: 86%;
+  cursor: pointer;
+}
+
+#collectionBtn {
+  background-color: transparent;
+  color: var(--mainGrey);
+  font-size: 60px;
+  border: none;
+  margin-left: 30px;
+  z-index: 1;
+}
+#collectionBtn:hover {
+  opacity: 85%;
+  cursor: pointer;
+}
+
+
+ /* MODAL WINDOW */
+#iModal {
+  position: fixed;
+  display: none; /* hidden by default */
+  text-align: left;
+  top: 10px;
+  left: 65px;
+  border: 3px solid black;
+  border-radius: 15px;
+  padding: 20px 25px 30px 20px;
+  width: 400px;
+  height: 400px; 
+  background-color:  white; /* Black w/ opacity */
+  z-index: 1;
+}
+
+ #talkModal {
+  position: fixed;
+  top: 10px;
+  right: 0;
+  bottom: 0;
+  left: 430px;
+  display: block; /* pops by default */
+  border: 3px solid white;
+  border-radius: 15px;
+  width: 700px;
+  height: 700px; 
+  overflow: auto; /* Enable scroll if needed */
+  overflow-y: auto;
+  background-color: black; /* Black w/ opacity */
+  z-index: 1;
+}
+#talkModalHeader {
+  padding: 10px;
+  cursor: move;
+  background-color: var(--neonGreen);
+  color: white;
+}
+
+#whatModal {
+  position: fixed;
+  top: 10px;
+  right: 0;
+  bottom: 0;
+  left: 900px;
+  display: none; /* hides by default */
+  border: 3px solid black;
+  border-radius: 15px;
+  width: 600px;
+  height: 500px; 
+  background-color:  white; /* Black w/ opacity */
+  z-index: 1;
+}
+#whatModalHeader {
+  padding: 10px;
+  cursor: move;
+  background-color: var(--mainPurple);
+  color: white;
+}
+.about p{
+  font-size:25px;
+}
+
+
+/* MODAL PARTS */
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover{
+  text-decoration: none;
+  cursor: pointer;
+} 
+
+.talk-question{
+  font-size: 25px;
+  background-color: white;
+  width: 80%;
+  margin: 20px;
+  padding: 10px 60px 10px 20px;
+  border-radius: 30px 30px 30px 10px;
+ }
+
+#answer-text {
+  background: transparent;
+  height: 80px;
+  width: 80%;
+  border: 3px solid white;
+  border-radius: 50px 15px 50px 50px;
+  margin: 20px 20px 100px 20px;
+  color: white;
+  font-size: 25px;
+
+}
+#answer-text::placeholder {
+  color: white;
+}
+.talk-modal-bottom-row {
+  width:80%;
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.letter-count {
+  color:  white;
+  background-color: var(--mainGrey);
+  font-size: 25px;
+  border-radius: 50px;
+}
+.sendBtn {
+  background-color: var(--neonGreen);
+  color: white;
+  font-size: 25px;
+  border-radius: 50px;
+}
+.sendBtn:hover {
+  color: var(--mainPurple);
+  cursor: pointer;
+}
+.emailBtn{
+  background-color: var(--mainPurple);
+  opacity:100%;
+  color: white;
+}
+.emailBtn:hover {
+  opacity: 90%;;
+}
+/*
+.success {
+  display: block;
+  visibility: hidden;
+  color: white;
+  background-color: var(--neonGreen);
+  margin: 10px;
+}
+.fail {
+  display: block;
+  visibility:hidden;
+  color: white;
+  background-color: var(--mainPurple);
+  margin: 10px;
+}
+*/
+#email{
+  color:  var(--mainPurple);
+  font-size: 25px;
+  padding-right: 50px;
+}
+
+
+/* ANSWERS & RESPONSES */
+
+#collectionPage {
+  display: none; /* hides by default */
+  overflow-y: auto; /* Enable scroll if needed */
+  top: -50px;
+  padding: 200px 20px 0px 20px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index:-1;
+}
+#answer-collection{
+  color: black;
+}
+#cpQuestion {
+  font-size: 15px;
+  text-align: center;
+  background-color: white;
+  min-width: 300px;
+  max-width: 350px;
+  margin: 20px 0 20px 125px;
+  padding: 10px 0px 10px 0px;
+  border: 2px solid black;
+  border-radius: 30px 10px 30px 30px;
+}
+.answer{
+  color: white;
+  background: black;
+  border: 2px solid none; 
+  border-radius: 10px 30px 30px 30px;
+  min-width: 600px;
+  max-width: 800px;
+}
+.country{
+  color: white;
+  width: 100px;
+  text-align: center;
+  background: var(--mainGrey);
+  margin-bottom: 10px;
+  border: 2px solid none; 
+  border-radius: 10px 10px 10px 10px;
+}
+.date{
+  color: white;
+  width: 100px;
+  text-align: center;
+  background: var(--mainGrey);
+  border: 2px solid none; 
+  border-radius: 10px 10px 10px 10px;
+}
+.dataUnit{
+padding-bottom: 10px;
+}
+.item {
+  color: black;
+  border-radius: 0.25rem;
+  transition: all 1s ease-in-out;
+  border: 0.15rem solid white;
+}
+.item:hover {
+  border-color: black;
+  color: white;
+}
+.remove-icon {
+  cursor: pointer;
+}
+.remove-icon:hover {
+  transform: scale(1.4);
+}
+#next{
+  background-color: var(--neonGreen);
+  color: white;
+  font-size: 25px;
+  border: none;
+  outline: none;
+  border-radius: 50px;
+  box-shadow: none;
+  position: absolute;
+  right: 200px;
+  margin-top: 50px;
+}
+#next:hover {
+  color: var(--mainPurple);
+  cursor: pointer;
+}
