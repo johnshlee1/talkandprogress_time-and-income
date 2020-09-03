@@ -1,4 +1,3 @@
-
 //MODAL
 // Get the modal
 const body = document.querySelector("body");
@@ -13,7 +12,7 @@ const iBtn = document.getElementById("iBtn");
 const iGrid =  document.querySelector(".iGrid");
 const talkBtn = document.getElementById("talkBtn");
 const whatBtn = document.getElementById("whatBtn");
-
+const loadBtn = document.getElementById("loadBtn");
 // Get the <span> tag that closes the modal
 const talkClose = document.getElementsByClassName("talk-close")[0];
 const whatClose = document.getElementsByClassName("what-close")[0];
@@ -43,15 +42,13 @@ iBtn.addEventListener('click', function() {
 but if collectionPage is already displayed, make no change. */
 function noModal() {
       if (talkModal.style.display !== "block" && (iModal.style.display !== "block" && whatModal.style.display !== "block")){
-            postGet();
             loadCollectionPageStyle();
       } else if (collectionPage.style.display === "block") {
             collectionPage.style.display = "block";
-
       } else {
             collectionPage.style.display = "none";
-      };
-};
+      }
+}
 
 function loadCollectionPageStyle() {
       const topBarGrid = document.querySelector(".TOP-BAR-GRID");
@@ -60,8 +57,7 @@ function loadCollectionPageStyle() {
       iBtn.style.borderColor = "black";
       collectionPage.style.display = "block";
       body.style.background = "white";
-      
-};
+}
 
 
 //clicking anywhere besides these buttons closes iModal
@@ -73,10 +69,14 @@ document.addEventListener('click', function(event) {
       const isClickInsidetalkBtn = talkBtn.contains(event.target);
       const isClickInsidewhatBtn = whatBtn.contains(event.target);
     
-      if (!isClickInsideiBtn && !isClickInsideiModal &&
+      if (iModal.style.display==="block" && !isClickInsideiBtn && !isClickInsideiModal &&
             !isClickInsidetalkClose && !isClickInsidewhatClose && 
             ! isClickInsidetalkBtn && !isClickInsidewhatBtn) {
             iModal.style.display = "none";
+            if (collectionPage.style.display!=="block" && talkModal.style.display !== "block" && (iModal.style.display !== "block" && whatModal.style.display !== "block")) {
+                  getTenItems();
+                  loadCollectionPageStyle();
+            } 
       } 
 
       //displays collectionPage
@@ -97,7 +97,7 @@ document.addEventListener('click', function(event) {
       } else if (isClickInsidewhatModal || isClickInsidewhatBtn) {
             whatModal.style.zIndex = "3";
             talkModal.style.zIndex = "2";
-      };
+      }
 });
 
 
@@ -126,7 +126,12 @@ talkClose.onclick = function() {
       talkModal.style.right = "0";
       talkModal.style.bottom = "0";
       talkModal.style.left = "430px";
-      noModal();
+      if (collectionPage.style.display !== "block") {
+            noModal();
+            if (talkModal.style.display !== "block" && (iModal.style.display !== "block" && whatModal.style.display !== "block")) {
+                  getTenItems();
+            } 
+      }
 };
 whatClose.onclick = function() {
       whatModal.style.display = "none";
@@ -134,15 +139,23 @@ whatClose.onclick = function() {
       whatModal.style.right = "0";
       whatModal.style.bottom = "0";
       whatModal.style.left = "900px";
-      noModal();
-};
+      if (collectionPage.style.display !== "block") {
+            noModal();
+            if (talkModal.style.display !== "block" && (iModal.style.display !== "block" && whatModal.style.display !== "block")) {
+                  getTenItems();
+            } 
+      }
+}
 
-
+/*
 // Textarea autoExpand
 document.addEventListener('input', function (event) {
-      if (event.target.tagName.toLowerCase() !== 'textarea') {return};
+      if (event.target.tagName.toLowerCase() !== 'textarea') {
+          return;
+      }
       autoExpand(event.target);
 }, false);
+*/
 
 var autoExpand = function(field){
       // Reset field height
@@ -159,19 +172,7 @@ var autoExpand = function(field){
                   + parseInt(computed.getPropertyValue('border-bottom-width'), 10);
 
         field.style.height = height + 'px';
-}
-
-/* NOT NEEDED
-// Copy email from whatModal
-function copyEmail() {
-      var tempInput = document.createElement("input");
-      tempInput.value = "talk@progress.com";
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand("copy");
-      document.body.removeChild(tempInput);
-}
-*/
+};
 
 
 //DRAGGABLE
@@ -224,13 +225,31 @@ function dragElement(elmnt) {
   //Get four elements and assign them to variables.
 const form = document.getElementById("input-form");
 const inputText = document.getElementById("answer-text");
-const inputCountry = document.getElementById("country");
+//const inputCountry = document.getElementById("country");
 const sendBtn = document.querySelector(".sendBtn");
 const collectionBtn = document.getElementById("collectionBtn");
 const collectionPage = document.getElementById("collectionPage");
 const collection = document.getElementById("answer-collection");
 
+function createDivs () {
+      //create divs for each data property
+      const divFill = document.createElement('div');
+      const divAnsw = document.createElement('div');
+   //   const divCoun = document.createElement('div');
+      const divDate = document.createElement('div');
+      const divUnit = document.createElement("div");
+      const row = document.createElement("div");
 
+      //css bootstrap
+      divFill.classList.add("col-md-5");
+      divAnsw.classList.add("col-md-5");
+      divAnsw.classList.add("answer");
+      row.classList.add("col-md-2");
+     // divCoun.classList.add("country");
+      divDate.classList.add("date");
+      divUnit.classList.add("row");
+      divUnit.classList.add("dataUnit");
+}
 
 // counts the text of input when typing
 function CountRemaining() {
@@ -242,235 +261,396 @@ function CountRemaining() {
 CountRemaining();
 
 
-// PAGINATION
-// global JavaScript variables
 
-// stores json data _id from database to avoid redundant appending on display
-const dataID = [];
-const dataIterArr = [];
-var backCounter = 0;
-const nextBtn = document.getElementById("next");
-
-
-// GET w/ fetch()
-
-async function getDataCount() {
-      const response = await fetch('/api');
-      const data = await response.json();
-
-      var count = data.length;
-      collectionBtn.textContent = count;
-      console.log("data count =", data.length)
-};
-getDataCount();
-
-
-
-async function getDataNew() {
-      const response = await fetch('/api');
-      const data = await response.json();
+//XML
+const sendHttpRequest = (method, url, data) => {
+      const promise = new Promise((resolve, reject) => {
+            const ajax = new XMLHttpRequest();
+            const asynchronous = true;
       
-      for (var item of data){
-            if (collectionPage.style.display === "block" && dataID.includes(item._id) === false && item._id === data.length) {
-           
-                  //create divs for each data property
-                  const filler = document.createElement('div');
-                  const answer = document.createElement('div');
-                  const country = document.createElement('div');
-                  const date = document.createElement('div');
-                  const dataUnit = document.createElement("div");
-                  const row = document.createElement("div");
+            ajax.open(method, url, asynchronous);
 
-                  //css bootstrap
-                  filler.classList.add("col-md-5");
-                  
-                  answer.classList.add("col-md-5");
-                  answer.classList.add("answer");
-
-                  row.classList.add("col-md-2");
-                  country.classList.add("country");
-                  date.classList.add("date");
-
-                  dataUnit.classList.add("row");
-                  dataUnit.classList.add("dataUnit");
-
-                  //puts each item of data into a unit to display in HTML
-                  answer.textContent = `${item.answer}`;
-                  country.textContent = `${item.country}`;
-                  const dateString = new Date(item.date).toLocaleString();
-                  date.textContent = dateString;
-
-                  //combine data as one unit
-                  row.append(country, date)
-                  dataUnit.append(answer, row);
-
-                  //prepend new data to collection
-                  collection.prepend(dataUnit);
-                  dataID.push(item._id);
-                  backCounter += 1;
-                  console.log("getNew = ", item);
+            ajax.responseType = 'json';
+            
+            if (data) {
+                  ajax.setRequestHeader('Content', 'application/json');
             };
-      };
+
+            // receiving response from url
+            ajax.onload = () => {
+                  if (ajax.status >= 400) {
+                        reject(ajax.response);
+                  } else {
+                        resolve(ajax.response);
+                  }
+            };
+
+            ajax.onerror = () => {
+                  reject('Something went wrong!')
+            };
+
+            // sending ajax request
+            ajax.send(JSON.stringify(data));
+      });
+
+      return promise;
 };
 
-async function getDataIter() {
-      const response = await fetch('/api');
-      const data = await response.json();
+var offsetCount  = 0;
+var last_id;
+var initialLoadKey = {key: false};
 
-      const mark = data.length - backCounter;
-      if (mark >= 10) {
-            for(var i = mark - 1; i >= mark-10; i--) {
-                  dataIterArr.push(data[i]);
-                  backCounter+=1;
+// GET LONG POLL
+function getNewData () {
+      $.ajax({
+            type: "GET",
+            url: "includes/poll.php?_id="+_id,
+            async: true,
+            cache: false,
+            timeout: 50000,
+            success: function(data) {
+                  console.log("data =", data);
+                  var json = eval('('+data+ ')');
+                  if(json['msg'] != "") {
+                        console.log("json =", json);
+                  }
+                  _id = json['_id'];
+                  last_id = json['_id'];
+                  console.log("last_id =", last_id);
 
-                  console.log("getDataIter = ", data[i]);
-                  console.log("backCoutner = ", backCounter);
-            };
-      } else if (0 < mark < 10) {
-            for(var i = mark - 1; i >= 0; i--) {
-                  dataIterArr.push(data[i]);
-                  backCounter+=1;
+                  if(collectionPage.style.display === "block") {
+                        if(initialLoadKey.key === false) {
+                              initGetTen();
 
-                  console.log("getDataIter = ", data[i]);
-                  console.log("backCoutner = ", backCounter);
-            };
-      } else if (mark = 0) {
-            return
+                              const divFill = document.createElement('div');
+                              const divAnsw = document.createElement('div');
+                             // const divCoun = document.createElement('div');
+                              const divDate = document.createElement('div');
+                              const divUnit = document.createElement("div");
+                              const row = document.createElement("div");
+
+                              //css bootstrap
+                              divFill.classList.add("col-md-5");
+                              divAnsw.classList.add("col-md-5");
+                              divAnsw.classList.add("answer");
+                              row.classList.add("col-md-2");
+                              //divCoun.classList.add("country");
+                              divDate.classList.add("date");
+                              divUnit.classList.add("row");
+                              divUnit.classList.add("dataUnit");
+
+                              //puts each item of data into a unit to display in HTML
+                              divAnsw.textContent = json['answer'];
+                             // divCoun.textContent = json['country'];
+                              divDate.textContent = json['date'];
+
+                              //combine data as one unit
+                              row.append(divDate);
+                              divUnit.append(divFill, divAnsw, row);
+                              
+                              //prepend the new data to collection
+                              collection.prepend(divUnit);
+                              offsetCount += 1;
+                              initialLoadKey.key = true;
+                        } else {
+                              //create divs for each data property
+                              const divFill = document.createElement('div');
+                              const divAnsw = document.createElement('div');
+                             // const divCoun = document.createElement('div');
+                              const divDate = document.createElement('div');
+                              const divUnit = document.createElement("div");
+                              const row = document.createElement("div");
+
+                              //css bootstrap
+                              divFill.classList.add("col-md-5");
+                              divAnsw.classList.add("col-md-5");
+                              divAnsw.classList.add("answer");
+                              row.classList.add("col-md-2");
+                           //   divCoun.classList.add("country");
+                              divDate.classList.add("date");
+                              divUnit.classList.add("row");
+                              divUnit.classList.add("dataUnit");
+
+                              //puts each item of data into a unit to display in HTML
+                              divAnsw.textContent = json['answer'];
+                          //    divCoun.textContent = json['country'];
+                              divDate.textContent = json['date'];
+
+                              //combine data as one unit
+                              row.append(divDate);
+                              divUnit.append(divFill, divAnsw, row);
+                              
+                              //prepend the new data to collection
+                              collection.prepend(divUnit);
+                              offsetCount += 1;
+                        }
+                  }
+                  getDataCount();
+                  setTimeout('getNewData()', 1000);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                  console.log("error:" + textStatus + " (" + errorThrown + ")");
+                  setTimeout('getNewData()', 15000);
+            }
+      });
+
+};
+$(document).ready(function(){
+      getNewData();
+});
+
+
+const initGetTen = () => {
+      $.ajax({ 
+              url: "includes/last_id.php",
+              data: { 'last_id': last_id },
+              type: 'POST',
+              async: true,
+              cache: false,
+              success: function(data) {
+                    console.log("initGetTen() =", data)
+                    var json = eval('('+data+ ')');
+                 //   last_id = json[0].id;
+                    for (var a = 0; a < json.length; a++){
+                        var answer = json[a].answer;
+                    //    var country = json[a].country;
+                        var date = json[a].date;
+      
+                        //create divs for each data property
+                        const divFill = document.createElement('div');
+                        const divAnsw = document.createElement('div');
+                  //      const divCoun = document.createElement('div');
+                        const divDate = document.createElement('div');
+                        const divUnit = document.createElement("div");
+                        const row = document.createElement("div");
+      
+                        //css bootstrap
+                        divFill.classList.add("col-md-5");
+                        divAnsw.classList.add("col-md-5");
+                        divAnsw.classList.add("answer");
+                        row.classList.add("col-md-2");
+                   //     divCoun.classList.add("country");
+                        divDate.classList.add("date");
+                        divUnit.classList.add("row");
+                        divUnit.classList.add("dataUnit");
+                        
+                        //puts each item of data into a unit to display in HTML
+                        divAnsw.textContent = answer;
+                   //     divCoun.textContent = country;
+                        divDate.textContent = date;
+      
+                        //combine data as one unit
+                        row.append(divDate);
+                        divUnit.append(divFill, divAnsw, row);
+                        
+                        //append 10 data to collection
+                        collection.append(divUnit);
+                        console.log("appendedTen =", answer);
+                    }
+                    offsetCount += 9;
+              }
+      })
+};
+
+
+// GET Pagination by 10 items at a time
+const getTenItems = () => {
+      if (collectionPage.style.display === "block") {
+            $.ajax({ 
+                  url: "includes/getTenItems_after_send.php",
+                  data: { 'offsetCount': offsetCount },
+                  type: 'POST',
+                  async: true,
+                  cache: false,
+                  success: function(data) {
+                        console.log("getTenItems(); after send =", data)
+                        var json = eval('('+data+ ')');
+                        // last_id = json[json.length-1].id;
+                        for (var a = 0; a < json.length; a++){
+                              var answer = json[a].answer;
+                              //var country = json[a].country;
+                              var date = json[a].date;
+            
+                              //create divs for each data property
+                              const divFill = document.createElement('div');
+                              const divAnsw = document.createElement('div');
+                              //const divCoun = document.createElement('div');
+                              const divDate = document.createElement('div');
+                              const divUnit = document.createElement("div");
+                              const row = document.createElement("div");
+            
+                              //css bootstrap
+                              divFill.classList.add("col-md-5");
+                              divAnsw.classList.add("col-md-5");
+                              divAnsw.classList.add("answer");
+                              row.classList.add("col-md-2");
+                              //divCoun.classList.add("country");
+                              divDate.classList.add("date");
+                              divUnit.classList.add("row");
+                              divUnit.classList.add("dataUnit");
+                              
+                              //puts each item of data into a unit to display in HTML
+                              divAnsw.textContent = answer;
+                              //divCoun.textContent = country;
+                              divDate.textContent = date;
+            
+                              //combine data as one unit
+                              row.append(divDate);
+                              divUnit.append(divFill, divAnsw, row);
+                              
+                              //append 10 data to collection
+                              collection.append(divUnit);
+                              console.log("appendedTen =", answer);
+                        }
+                        offsetCount += 10;
+                  },
+                  error: function(request, status, error){
+                        alert("Error: Could not proceed");
+                  }
+            });
+      } else if (collectionPage.style.display !== "block") {
+            $.ajax({ 
+                  url: "includes/getTenItems_w-o_send.php",
+                  type: 'GET',
+                  async: true,
+                  cache: false,
+                  success: function(data) {
+                        console.log("getTenItems(); w/o send =", data)
+                        var json = eval('('+data+ ')');
+                        // last_id = json[json.length-1].id;
+                        for (var a = 0; a < json.length; a++){
+                              var answer = json[a].answer;
+                           //   var country = json[a].country;
+                              var date = json[a].date;
+            
+                              //create divs for each data property
+                              const divFill = document.createElement('div');
+                              const divAnsw = document.createElement('div');
+                           //   const divCoun = document.createElement('div');
+                              const divDate = document.createElement('div');
+                              const divUnit = document.createElement("div");
+                              const row = document.createElement("div");
+            
+                              //css bootstrap
+                              divFill.classList.add("col-md-5");
+                              divAnsw.classList.add("col-md-5");
+                              divAnsw.classList.add("answer");
+                              row.classList.add("col-md-2");
+                         //     divCoun.classList.add("country");
+                              divDate.classList.add("date");
+                              divUnit.classList.add("row");
+                              divUnit.classList.add("dataUnit");
+                              
+                              //puts each item of data into a unit to display in HTML
+                              divAnsw.textContent = answer;
+                         //     divCoun.textContent = country;
+                              divDate.textContent = date;
+            
+                              //combine data as one unit
+                              row.append(divDate);
+                              divUnit.append(divFill, divAnsw, row);
+                              
+                              //append 10 data to collection
+                              collection.append(divUnit);
+                              console.log("appendedTen =", answer);
+                        }
+                        offsetCount += 10;
+                  },
+                  error: function(request, status, error){
+                        alert("Error: Could not proceed");
+                  }
+            });
       }
-
-
-      for (const item of dataIterArr){
-            if (dataID.includes(item._id) === false){
-
-                  //create divs for each data property
-                  const filler = document.createElement('div');
-                  const answer = document.createElement('div');
-                  const country = document.createElement('div');
-                  const date = document.createElement('div');
-                  const dataUnit = document.createElement("div");
-                  const row = document.createElement("div");
-
-                  //css bootstrap
-                  filler.classList.add("col-md-5");
-                  
-                  answer.classList.add("col-md-5");
-                  answer.classList.add("answer");
-
-                  row.classList.add("col-md-2");
-                  country.classList.add("country");
-                  date.classList.add("date");
-
-                  dataUnit.classList.add("row");
-                  dataUnit.classList.add("dataUnit");
-
-                  
-                  //puts each item of data into a unit to display in HTML
-                  answer.textContent = `${item.answer}`;
-                  country.textContent = `${item.country}`;
-                  const dateString = new Date(item.date).toLocaleString();
-                  date.textContent = dateString;
-
-                  //combine data as one unit
-                  row.append(country, date);
-                  dataUnit.append(filler,answer, row);
-                  
-                  //append 10 data to collection
-                  collection.append(dataUnit);
-                  dataID.push(item._id);
-                  console.log("appendDataIter = ", item);
-            };
-      };
-      console.log("mark post =", data.length - backCounter)
 };
 
 
 
-/*
-// POST w/ fetch()
-sendBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-
-    if (inputText.value === null || inputText.value.match(/^ *$/) !== null) {
-        alert("Please share your desires!");
-    } else {
-           /* async function postData() {
-
-                  const data = {
-                        answer: inputText.value,
-                        country: inputCountry.value,
-                        date: Date.now()
-                  };
-
-                  const options = {
-                        method: 'POST',
-                        headers: {
-                        'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                  };
-
-                  form.reset();
-
-                  const response = await fetch('/api', options);
-                  const json = await response.json(data);
-                  
-                  console.log("post =", JSON.stringify(data));
-            };
-
-            postData();
-         
-
-            form.reset();
-            talkModal.style.display = "none";
-
-           
-            //postGet();
-            getDataNew();
-            
-            getDataCount();
-            
-            // if all modal windows are closed, display collectionPage,
-            //but if collectionPage is already displayed, make no change. 
-            noModal(); // invokes postGet(), which triggers getDataIter()
-      };
-});
-   */
-
-function postGet() {
-      if (collectionPage.style.display !== "block"){
-            getDataIter();
-            
-      };
+// GET Data Count
+const getDataCount = () => {
+      sendHttpRequest('GET', "includes/getDataCount.php").then(response => {
+            collectionBtn.textContent = response;
+      })
 };
 
-
-// by clicking the answer-collection button, display the page
-collectionBtn.addEventListener('click',  () => {
-      if (collectionPage.style.display !== "block"){
-            getDataIter();
-            loadCollectionPageStyle();
-            
-
-            //NEEDS MORE WORKING HERE 
-      } else if (collectionPage.style.display === "block"){
-            getDataNew();
-            
-      } 
-});
-
-
-//Load more content by scroll
-
-nextBtn.addEventListener('click', function(){
-  getDataIter();
-});
-
-
 /*
-$(window).scroll(function () {
-  // End of the document reached?
-  if ($("#collectionPage").height() - $(this).height() == $(this).scrollTop()) {
-    getDataIter();
-  }
-});
+const postData = () => {
+      sendHttpRequest('POST', 'includes/postItem.php', {'answer': inputText.value }
+      ).then(response => {
+            console.log(response);
+      }).catch(err => {
+            console.log(err);
+      });
+      return false;
+};
 */
+/*
+const postData = () => {
+      if (inputText.value === null || inputText.value.match(/^ *$/) !== null) {
+            alert("Please share your desires!");
+            return;
+      } else { 
+            $.ajax({
+                  type: 'POST',
+                  url: 'includes/postItem.php',
+                  data: $('#input-form').serialize(),
+                  success: function(response){
+                        console.log("The answer", response);
+                  }
+            });
+      }
+      return false;
+};
+*/
+
+// POST DATA
+const postData = () => {
+      if (inputText.value === null || inputText.value.match(/^ *$/) !== null) {
+            alert("Please share your desires!");
+            return;
+      } else { 
+            $.ajax({
+                  type: 'POST',
+                  url: 'includes/post.php',
+                  async: true,
+                  cache: false,
+                  data: {'answer': inputText.value },
+                  success: function(response){
+                        console.log("The answer", response);
+                  }
+            });
+      }
+      return false;
+};
+
+
+// POST DATA => Trigger additional Functions when clicking sendBtn
+const clickSend = () => {
+      if (inputText.value === null || inputText.value.match(/^ *$/) !== null) {
+            return;
+      } else {
+            if (collectionPage.style.display !== "block") {
+                 
+                  talkModal.style.display = "none";
+                  noModal();
+                  form.reset();
+            } else if(collectionPage.style.display === "block") {
+                  talkModal.style.display = "none";
+                  form.reset();
+            }
+      }
+};
+
+
+
+// Load the Collection Page
+collectionBtn.addEventListener('click', () => {
+      if (collectionPage.style.display !== "block") {
+            getTenItems();
+            loadCollectionPageStyle();
+      }
+});
+
+//Load more content by loadBtn
+loadBtn.addEventListener('click', function(){
+      getTenItems();
+});

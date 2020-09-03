@@ -1,5 +1,9 @@
 <?php
       include_once 'includes/connect.php';
+      $result = mysqli_query($conn, "SELECT id FROM collection ORDER BY id DESC LIMIT 1");
+      while($row = mysqli_fetch_array($result)) {
+            $_id = $row['id'];
+      };
 ?>
 
 <!DOCTYPE html>
@@ -17,6 +21,10 @@
       <link rel="stylesheet" href="css/main.css">
 
       <title>Talk & Progress</title>
+      <script type="text/javascript" charset="utf-8">
+            var _id = <?php echo $_id; ?>;
+            var dataCount = _id;
+      </script>
 </head>
 
 
@@ -85,14 +93,14 @@
                   <div class="col-xs-3 col-md-2" style="bottom:15px;">
                         <button id="collectionBtn">
                                <?php
-
-                                    $sql = "SELECT count(id) AS total FROM collection";
-                                    $result = mysqli_query($conn, $sql);
-
-                                    $values = mysqli_fetch_assoc($result);
+                                    $sqlCount = "SELECT count(id) AS total FROM collection";
+                                    $resultCount = mysqli_query($conn, $sqlCount);
+                        
+                                    $values = mysqli_fetch_assoc($resultCount);
                                     $num_rows = $values['total'];
                                     echo $num_rows;
-                              ?></button>
+                              ?>
+                        </button>
                   </div>
 
 
@@ -122,7 +130,7 @@
                           </div>
                         
 
-                          <form id="input-form" class="form-inline" action="includes/submit.php" method="POST">
+                          <form id="input-form" class="form-inline" name="form _id" action="includes/postItem.php" method="POST" onsubmit="return !!(postData() & clickSend());">
 
                                 <textarea id="answer-text" class="form-control form-control-lg" name="answer" style="z-index: 10;"
                                 type='text' minlength="1" maxlength="600" size="10" 
@@ -193,31 +201,15 @@
                           What would you do with your time if you<br> didn’t have to think about making income?
                         </div>
                   </div>
-                 <?php
-                        $data = "7";
-                        //Created a template
-                        $sql = "SELECT * FROM collection WHERE answer=? ORDER BY id DESC;";
-                        //create a prepared statement
-                        $stmt = mysqli_stmt_init($conn);
-                        //Prepare the prepared statement
-                        if (!mysqli_stmt_prepare($stmt, $sql)) {
-                              echo "SQL statement failed";
-                        } else {
-                              //Bind parameters to the placeholder
-                              mysqli_stmt_bind_param($stmt, "s", $data);
-                              //Run parameters inside database
-                              mysqli_stmt_execute($stmt);
-                              $result = mysqli_stmt_get_result($stmt);
 
-                              while ($row = mysqli_fetch_assoc($result)) {
-                                    echo $row['answer'].'<br>'.$row['country'].'<br>'.$row['date'].'<br>';
-                              }
-                        }
-                  ?>
+                  <form>
+                        <input type="hidden" name="_id">
+                  </form>     
+
+                 
                   <div id="answer-collection"></div>
-                  <div class="loading" id="loading"></div>
-                  
-                  <button type="button" id="next" class="text-right">load more...</button>
+
+                  <button type="button" id="loadBtn" class="text-right" action="includes/getTenItems.php">load more...</button>
                   
             </div>
 
@@ -226,9 +218,12 @@
 
 
 <!-- jquery -->
-<script src="/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
 <!-- bootstrap js -->
-<script src="js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
 <!-- script js -->
-<script src="js/app.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+
+
+
 </html>
