@@ -2,7 +2,7 @@
 
 $servername = "talkandprogress.com.mysql";
 $username = "talkandprogress_com_cycle1_incomeandtime";
-$password = "";
+$password = "346417";
 $dbname = "talkandprogress_com_cycle1_incomeandtime";
 
 // getting data from database
