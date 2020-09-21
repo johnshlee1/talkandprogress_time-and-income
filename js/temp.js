@@ -1,12 +1,30 @@
+      /*
+//Load more content by loadBtn
+loadBtn.addEventListener('click', function(){
+      getTenData();
+});
+*/
+
 /*
 $(window).scroll(function () {
   // End of the document reached?
-  if ($("#collectionPage").height() - $(this).height() == $(this).scrollTop()) {
+  if ($("#collection").height() - $(this).height() == $(this).scrollTop()) {
     getDataIter();
   }
 });
 */
 
+/*
+// If the user goes back to the top of the page, "unseen" class is removed. NOT NEEDED ANYMORE
+function newDataSeen() {
+      var collectionPageRect = collectionPage.getBoundingClientRect(),
+      collectionRect = collection.getBoundingClientRect(),
+      offset = collectionRect.top - collectionPageRect.top;
+      if (offset >= 189 && offset <= 309) {
+            collectionPage.classList.remove("unseen");
+      } 
+}
+*/
 
 /* NOT NEEDED
 // Copy email from whatModal
@@ -361,6 +379,18 @@ const postData = () => {
                   }
             });
       }
+      return false;
+};
+*/
+
+/*
+const postData = () => {
+      sendHttpRequest('POST', 'includes/postItem.php', {'answer': inputText.value }
+      ).then(response => {
+            console.log(response);
+      }).catch(err => {
+            console.log(err);
+      });
       return false;
 };
 */

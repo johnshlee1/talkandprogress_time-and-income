@@ -1,0 +1,367 @@
+@import "./maincolor";
+
+#talkModal {
+    position: fixed;
+    top: 100px;
+    left: 430px;
+    display: block; /* pops by default */
+    border: 3px solid white;
+    border-radius: 15px;
+    width: 700px;
+    height: 700px; 
+    max-width: 90%;
+    max-height: 80%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: black; /* Black w/ opacity */
+    z-index: 1;
+  }
+
+  .talkModalGrid{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, max-content) minmax(0, max-content);
+    grid-template-areas: "question" "answer";
+    grid-gap: 15px;
+    width: 100%;
+  }
+
+  #talkModalHeader {
+    padding: 10px;
+    cursor: move;
+    font-size: 28px;
+    background-color: $mainneon;
+    color: white;
+  }
+
+
+
+/* The Close Button */
+  .close {
+    position:absolute;
+    right:0;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+  }
+  .close:hover{
+    text-decoration: none;
+    cursor: pointer;
+  } 
+  
+   #question {
+    grid-area: question;
+    font-size: 25px;
+    width: max-content;
+    max-width: 95%;
+    padding: 20px 20px 20px 40px;
+    margin-top: 5%;
+    border-radius: 50px 50px 50px 10px;
+    align-self: center;
+    justify-self: center;
+    background-color: white;
+   }
+
+   #input-form {
+    grid-area: answer;
+    align-self: center;
+    justify-self: center;
+    width: 100%;
+   }
+
+  .formGrid {
+    display: grid;
+    /*
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: minmax(0,1fr);
+    grid-template-areas: "write write" "num btn"; 
+    */
+
+    grid-template-columns: minmax(0, max-content) 1fr; // minmax(0, 1fr);
+    grid-template-rows: minmax(min-content, 1fr); //1fr minmax(0, 1fr);
+    grid-template-areas: "write write"; //"write write write" ". . ." "num . btn";
+    width: 100%;
+  }
+  #answer-text {
+    grid-area: write;
+    align-self: start;
+    justify-self: center;
+    width: 575px;
+    max-width: 95%;
+    height: 80px;
+    max-height: 500px;
+    margin-bottom: 15px;
+    padding: 10px 20px 10px 40px;
+    border: 3px solid white;
+    border-radius: 70px 15px 70px 70px;
+    overflow-y: scroll;
+    font-size: 25px;
+    color: white;
+    background: transparent;
+  }
+  
+  #answer-text::placeholder {
+    color: white;
+  }
+  /*
+  .talk-modal-bottom-row {
+    width: 85%;
+    margin-left: 25px;
+    display: flex;
+    justify-content: space-between;
+  }
+  */
+  .letter-count {
+    grid-area: num;
+    justify-self: start;
+    align-self: end;
+    width: min-content;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 15px;
+    margin-left:15px;
+    padding: 10px;
+    border-radius: 80px;
+    font-size: 25px;
+    color: white;
+    background-color: #C4C4C4;
+  }
+  .submitBtn {
+    grid-area: btn;
+    justify-self: end;
+    align-self: end;
+    width: min-content;
+    position: absolute;
+    bottom: 0;
+    right:0;
+    margin-bottom: 15px;
+    margin-right:15px;
+    background-color: transparent;
+    color: $mainneon;
+    font-size: 25px;
+  }
+  .submitBtn:hover {
+    opacity: 80%;
+    cursor: pointer;
+  }
+
+
+
+
+//iPad horizontal         /// DONE
+
+@media only screen and (max-width: 3000px ) {
+    #talkModal{
+      top: 100px;
+      left: 430px;
+  }
+}
+@media only screen and (max-width: 1024px ) {
+  #talkModal{
+    width: 700px;
+    height: 600px; 
+    top: 70px;
+    left: 80px;
+  }
+  #talkModalHeader {
+    font-size: 24px;
+    padding: 8px;
+  }
+  .close {
+    font-size: 24px;
+  }
+  #question {
+    font-size: 22px;
+  }
+  #answer-text {
+    width: 550px;
+    height: 70px;
+    font-size: 22px;
+  }
+  .letter-count{
+    font-size: 22px;
+  }
+  .submitBtn{
+    font-size: 22px;
+  }
+}
+
+
+
+//iPhone X/XS iOS 12 horizontal         ///DONE
+  @media only screen and (max-width: 812px) {
+      #talkModal{
+        width: 630px;
+        max-width: 90%;
+        max-height: 70%;
+      }
+      #talkModalHeader {
+        font-size: 20px;
+      }
+      .close {
+        right: 10px;
+        font-size: 20px;
+      }
+      #question {
+        font-size: 18px;
+      }
+      #answer-text {
+        width: 430px;
+        height: 55px;
+        font-size: 18px;
+      }
+      .letter-count{
+        font-size: 18px;
+      }
+      .submitBtn{
+        font-size: 18px;
+      }
+  }
+
+
+  //Galaxy S9 horizontal @740px & iPhone 6/7/8 Plus iOS 11 horizontal @736      ///DONE
+@media only screen and (max-width: 740px ) {
+  #talkModal{
+    top: 54px;
+    left: 23px;
+  }
+  #talkModalHeader {
+    font-size: 18px;
+    padding: 4px;
+  }
+  .close {
+    font-size: 18px;
+  }
+  #question {
+    font-size: 16px;
+  }
+  #answer-text {
+    width: 430px;
+    height: 50px;
+    font-size: 15px;
+  }
+  .letter-count{
+    font-size: 16px;
+  }
+  .submitBtn{
+    font-size: 16px;
+  }
+}
+
+
+  //iPhone 6/7/8 iOS 11 horizontal        /// DONE
+  @media only screen and (max-width: 667px) {
+    #talkModal{
+      top: 45px;
+    }
+    #question {
+      font-size: 13px;
+    }
+    #answer-text {
+      height: 55px;
+      font-size: 12px;
+    }
+    .letter-count{
+      font-size: 13px;
+      border-radius: 40px;
+    }
+    .submitBtn{
+      font-size: 13px;
+    }
+  }
+  @media only screen and (max-height: 500px) {
+    .formGrid{
+      //
+      display:grid;
+      grid-template-columns: minmax(0, max-content) 1fr minmax(0, 1fr);
+//
+      grid-template-rows: minmax(0, 1fr) minmax(0, max-content);
+      grid-template-areas: "write write write" "num . btn";
+    }
+    .letter-count{
+      position: static;
+//
+      grid-area: num;
+      align-self: end;
+      justify-self: start;
+      //
+    }
+    .submitBtn{
+      position: static;
+//
+      grid-area: btn;
+    align-self: end;
+    justify-self: end;
+    //
+    }
+  }
+
+
+//iPhone 6/7/8 iOS 11 & iPhone X/XS iOS 12 vertical       /// DONE
+@media only screen and (max-width: 375px) {
+  #talkModal{
+    width: 330px;
+    height: 400px; 
+  }
+  #talkModalHeader {
+    font-size: 13px;
+    padding: 3px;
+  }
+  .close {
+    font-size: 13px;
+  }
+  #question {
+    font-size: 12px;
+    padding: 5px 5px 5px 5px;
+    border-radius: 25px 25px 25px 10px;
+  }
+  #answer-text {
+    height: 45px;
+    max-height: 180px;
+    font-size: 11px;
+  }
+  .letter-count{
+    font-size: 12px;
+    border-radius: 5px;
+    justify-self: start;
+  }
+  .submitBtn{
+    font-size: 12px;
+    justify-self: start;
+  }
+}
+
+
+//Galaxy S9 vertical
+@media only screen and (max-width: 360px) {
+  #talkModal{
+    width: 320px;
+  }
+}
+
+
+//Nokia 8110 4G @240px
+@media only screen and (max-width: 260px) {
+  #talkModal{
+    top: 30px;
+    left: 15px;
+  }
+  #talkModalHeader {
+    font-size: 11px;
+    padding: 0;
+  }
+  .close {
+    font-size: 11px;
+  }
+  #question {
+    font-size: 10px;
+  }
+  #answer-text {
+    font-size: 10px;
+  }
+  .letter-count{
+    font-size: 10px;
+  }
+  .submitBtn{
+    font-size: 10px;
+  }
+} 

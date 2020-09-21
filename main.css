@@ -1,0 +1,390 @@
+/*MAIN*/
+@font-face {
+  font-family: Authentic Sans;
+  src: url(AUTHENTIC/WOFF/AUTHENTICSans-130.woff2) format("woff2"), url(AUTHENTIC/WOFF/AUTHENTICSans-130.woff) format("woff");
+}
+
+body {
+  background: black;
+  font-family: Authentic Sans;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.header {
+  position: fixed;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50% 16% 18% 16%;
+  grid-template-rows: auto auto;
+  grid-template-areas: "iBtn talkBtn whatBtn collectionBtn"
+ "iModal talkModal whatModal .";
+  background-color: black;
+  z-index: 1;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}
+
+/* BUTTONS */
+.iBtn {
+  grid-area: iBtn;
+  position: fixed;
+  z-index: 2;
+  margin-left: 33px;
+  margin-top: 37px;
+}
+
+#iBtn {
+  background-color: transparent;
+  color: white;
+  font-size: 25px;
+  padding: 0;
+  border: 2px solid white;
+  border-radius: 30px;
+  z-index: 2;
+}
+
+#iBtn:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.talkBtn {
+  grid-area: talkBtn;
+  z-index: 2;
+}
+
+#talkBtn {
+  background-color: transparent;
+  color: #00FF38;
+  font-size: 60px;
+  border: none;
+}
+
+#talkBtn:hover {
+  opacity: 80%;
+  cursor: pointer;
+}
+
+.whatBtn {
+  grid-area: whatBtn;
+  z-index: 2;
+}
+
+#whatBtn {
+  background-color: transparent;
+  color: #8000FF;
+  font-size: 60px;
+  border: none;
+}
+
+#whatBtn:hover {
+  opacity: 86%;
+  cursor: pointer;
+}
+
+.collectionBtn {
+  grid-area: collectionBtn;
+  z-index: 2;
+}
+
+#collectionBtn {
+  background-color: transparent;
+  color: #C4C4C4;
+  font-size: 60px;
+  border: none;
+}
+
+#collectionBtn:hover {
+  opacity: 85%;
+  cursor: pointer;
+}
+
+.footer {
+  margin-bottom: 100px;
+}
+
+#talkModal {
+  position: fixed;
+  top: 100px;
+  right: 0;
+  bottom: 0;
+  left: 430px;
+  display: block;
+  /* pops by default */
+  border: 3px solid white;
+  border-radius: 15px;
+  width: 700px;
+  height: 700px;
+  overflow: auto;
+  /* Enable scroll if needed */
+  overflow-y: auto;
+  background-color: black;
+  /* Black w/ opacity */
+  z-index: 1;
+}
+
+#talkModalHeader {
+  padding: 10px;
+  cursor: move;
+  background-color: #00FF38;
+  color: white;
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#question {
+  text-align: left;
+  font-size: 25px;
+  background-color: white;
+  width: 90%;
+  padding: 20px 20px 20px 40px;
+  margin: 100px auto 0 auto;
+  border-radius: 50px 50px 50px 10px;
+}
+
+#answer-text {
+  background: transparent;
+  height: 80px;
+  width: 90%;
+  border: 3px solid white;
+  border-radius: 70px 15px 70px 70px;
+  margin: 20px auto 100px auto;
+  padding: 10px 20px 10px 40px;
+  color: white;
+  font-size: 25px;
+}
+
+#answer-text::placeholder {
+  color: white;
+}
+
+.talk-modal-bottom-row {
+  width: 85%;
+  margin-left: 25px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.letter-count {
+  color: white;
+  background-color: #C4C4C4;
+  font-size: 25px;
+  border-radius: 80px;
+}
+
+.submitBtn {
+  background-color: transparent;
+  color: #00FF38;
+  font-size: 25px;
+  border-radius: 50px;
+}
+
+.submitBtn:hover {
+  opacity: 80%;
+  cursor: pointer;
+}
+
+#whatModal {
+  position: fixed;
+  top: 100px;
+  right: 0;
+  bottom: 0;
+  left: 900px;
+  display: none;
+  /* hides by default */
+  border: 3px solid black;
+  border-radius: 15px;
+  width: 600px;
+  height: 500px;
+  background-color: white;
+  /* Black w/ opacity */
+  z-index: 1;
+}
+
+#whatModalHeader {
+  padding: 10px;
+  cursor: move;
+  background-color: #8000FF;
+  color: white;
+}
+
+.about p {
+  font-size: 25px;
+}
+
+#email {
+  color: #8000FF;
+  font-size: 25px;
+  padding-right: 50px;
+}
+
+#iModal {
+  position: fixed;
+  display: none;
+  /* hidden by default */
+  text-align: left;
+  border: 3px solid black;
+  border-radius: 15px;
+  padding: 20px 25px 30px 20px;
+  width: 400px;
+  height: 400px;
+  background-color: white;
+  /* Black w/ opacity */
+  z-index: 1;
+}
+
+#collectionPage {
+  position: absolute;
+  display: none;
+  /* hides by default */
+  width: 100%;
+  height: auto;
+  padding-top: 200px;
+}
+
+.questionRow {
+  display: grid;
+  grid-template-columns: minmax(min-content, max-content);
+  grid-template-rows: auto;
+  grid-template-areas: "question date";
+  justify-content: end;
+  justify-items: end;
+  align-content: end;
+  align-items: end;
+  width: inherit;
+  padding-bottom: 15px;
+  padding-top: 10px;
+  margin-top: 50px;
+}
+
+.questionCP {
+  grid-area: question;
+  margin: 5px 5px 5px 5px;
+  border: 2px solid black;
+  border-radius: 30px 10px 30px 30px;
+  font-size: 15px;
+  overflow-wrap: break-word;
+  color: black;
+  background: white;
+  padding: 10px 15px 10px 18px;
+}
+
+.questionDate {
+  width: max-content;
+  height: max-content;
+  grid-area: date;
+  margin: 5px;
+  padding: 5px;
+  border: 2px solid transparent;
+  border-radius: 50px 50px 50px 50px;
+  text-align: center;
+  font-size: 10px;
+  color: white;
+  background: #C4C4C4;
+  padding-top: 5px;
+}
+
+.answerRow {
+  height: 100%;
+  width: 100%;
+  color: black;
+}
+
+.dataUnit {
+  display: grid;
+  grid-template-columns: minmax(min-content, max-content);
+  grid-template-rows: auto;
+  grid-template-areas: "answer date";
+  justify-content: end;
+  justify-items: end;
+  align-content: end;
+  align-items: end;
+  width: inherit;
+  padding-bottom: 10px;
+  padding-top: 5px;
+}
+
+.answer {
+  grid-area: answer;
+  width: 90%;
+  height: auto;
+  margin: 5px 5px 5px 5px;
+  padding: 10px 15px 10px 18px;
+  border: 2px solid transparent;
+  border-radius: 10px 30px 30px 30px;
+  font-size: 15px;
+  overflow-wrap: break-word;
+  color: white;
+  background: black;
+}
+
+.date {
+  grid-area: date;
+  width: max-content;
+  height: max-content;
+  margin: 5px;
+  padding: 5px;
+  border: 2px solid transparent;
+  border-radius: 50px 50px 50px 50px;
+  text-align: center;
+  font-size: 10px;
+  color: white;
+  background: #C4C4C4;
+}
+
+.loadingRow {
+  margin-top: 20px;
+}
+
+#inview {
+  visibility: hidden;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 5;
+}
+
+#nomore {
+  font-size: 12px;
+  display: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*
+  #loadBtn{
+    background-color: $mainneon;
+    color: white;
+    font-size: 25px;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    box-shadow: none;
+    position: absolute;
+    right: 200px;
+    margin-top: 50px;
+  }
+  #loadBtn:hover {
+    color: $mainpurple;
+    cursor: pointer;
+  }
+
+  */
+/*# sourceMappingURL=main.css.map */

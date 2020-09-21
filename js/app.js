@@ -1,21 +1,21 @@
 //MODAL
 // Get the modal
-const body = document.querySelector("body");
-const iModal = document.getElementById("iModal");
-const whatModal = document.getElementById("whatModal");
-const talkModal = document.getElementById("talkModal");
-const modal = document.querySelector('.modal');
+const body = document.querySelector("body"),
+iModal = document.getElementById("iModal"),
+whatModal = document.getElementById("whatModal"),
+talkModal = document.getElementById("talkModal"),
+modal = document.querySelector('.modal');
 talkModal.style.display = "block"; //required for noModal(){if()}
 
 // Get the button that opens the modal
-const iBtn = document.getElementById("iBtn");
-const iGrid =  document.querySelector(".iGrid");
-const talkBtn = document.getElementById("talkBtn");
-const whatBtn = document.getElementById("whatBtn");
-const loadBtn = document.getElementById("loadBtn");
+const iBtn = document.getElementById("iBtn"),
+iGrid =  document.querySelector(".iGrid"),
+talkBtn = document.getElementById("talkBtn"),
+whatBtn = document.getElementById("whatBtn");
+//loadBtn = document.getElementById("loadBtn");
 // Get the <span> tag that closes the modal
-const talkClose = document.getElementsByClassName("talk-close")[0];
-const whatClose = document.getElementsByClassName("what-close")[0];
+const talkClose = document.getElementsByClassName("talk-close")[0],
+whatClose = document.getElementsByClassName("what-close")[0];
 
 // brings iModal forward when clicking iBtn 
 // and closes iModal when clicking again
@@ -31,10 +31,7 @@ iBtn.addEventListener('click', function() {
         iModal.style.display = "none";
         iGrid.style.zIndex = "2";
         iBtn.style.zIndex = "2";
-      };
-
-      //displays collectionPage
-      //noModal();
+      }
 });
 
 
@@ -51,8 +48,8 @@ function noModal() {
 }
 
 function loadCollectionPageStyle() {
-      const topBarGrid = document.querySelector(".TOP-BAR-GRID");
-      topBarGrid.style.backgroundColor = "white";
+      const header = document.querySelector(".header");
+      header.style.backgroundColor = "white";
       iBtn.style.color = "black";
       iBtn.style.borderColor = "black";
       collectionPage.style.display = "block";
@@ -62,34 +59,105 @@ function loadCollectionPageStyle() {
 
 //clicking anywhere besides these buttons closes iModal
 document.addEventListener('click', function(event) {
-      const isClickInsideiBtn = iBtn.contains(event.target);
-      const isClickInsideiModal = iModal.contains(event.target);
-      const isClickInsidetalkClose = talkClose.contains(event.target);
-      const isClickInsidewhatClose = whatClose.contains(event.target);
-      const isClickInsidetalkBtn = talkBtn.contains(event.target);
-      const isClickInsidewhatBtn = whatBtn.contains(event.target);
+      const isClickInsideiBtn = iBtn.contains(event.target),
+      isClickInsideiModal = iModal.contains(event.target),
+      isClickInsidetalkClose = talkClose.contains(event.target),
+      isClickInsidewhatClose = whatClose.contains(event.target),
+      isClickInsidetalkBtn = talkBtn.contains(event.target),
+      isClickInsidewhatBtn = whatBtn.contains(event.target);
     
       if (iModal.style.display==="block" && !isClickInsideiBtn && !isClickInsideiModal &&
             !isClickInsidetalkClose && !isClickInsidewhatClose && 
             ! isClickInsidetalkBtn && !isClickInsidewhatBtn) {
             iModal.style.display = "none";
             if (collectionPage.style.display!=="block" && talkModal.style.display !== "block" && (iModal.style.display !== "block" && whatModal.style.display !== "block")) {
-                  getTenItems();
+                  getTenData();
                   loadCollectionPageStyle();
             } 
       } 
+});
 
-      //displays collectionPage
-      //noModal();
+
+
+
+// When the user clicks on the NavBar button, open the modal
+
+talkBtn.onclick = function() {
+            talkModal.style.top = "100px";
+            talkModal.style.left = "430px";
+            talkModal.style.display = "block";
+};
+whatBtn.onclick = function() {
+
+            whatModal.style.top = "100px";
+            whatModal.style.left = "900px";
+            whatModal.style.display = "block";
+};
+  
+// This needs a further work
+// Modal Position Media Query
+$(window).resize(function(){     
+      if ($('#question').css("font-size") == "25px"){
+            talkBtn.onclick = function() {
+                  talkModal.style.top = "100px";
+                  talkModal.style.left = "430px";
+                  talkModal.style.display = "block";
+            }
+            whatBtn.onclick = function() {
+                  whatModal.style.top = "100px";
+                  whatModal.style.left = "900px";
+                  whatModal.style.display = "block";
+            };
+      } else if ($('#question').css("font-size") == "22px" || $('#question').css("font-size") == "18px"){
+            talkBtn.onclick = function() {
+                  talkModal.style.top = "70px";
+                  talkModal.style.left = "80px";
+                  talkModal.style.display = "block";
+            };/*
+            whatBtn.onclick = function() {
+                  whatModal.style.top = "px";
+                  whatModal.style.left = "px";
+            }*/
+      } else if ($('#question').css("font-size") == "16px") {
+            talkBtn.onclick = function() {
+                  talkModal.style.top = "54px";
+                  talkModal.style.left = "23px";
+                  talkModal.style.display = "block";
+            };/*
+            whatBtn.onclick = function() {
+                  whatModal.style.top = "px";
+                  whatModal.style.left = "px";
+            }*/
+      } else if ($('#question').css("font-size") == "13px" || $('#question').css("font-size") == "12px") {
+            talkBtn.onclick = function() {
+                  talkModal.style.top = "45px";
+                  talkModal.style.left = "23px";
+                  talkModal.style.display = "block";
+            };/*
+            whatBtn.onclick = function() {
+                  whatModal.style.top = "px";
+                  whatModal.style.left = "1px";
+            }*/
+      } else if ($('#question').css("font-size") == "10px") {
+            talkBtn.onclick = function() {
+                  talkModal.style.top = "30px";
+                  talkModal.style.left = "15px";
+                  talkModal.style.display = "block";
+            };/*
+            whatBtn.onclick = function() {
+                  whatModal.style.top = "px";
+                  whatModal.style.left = "px";
+            }*/
+      };
 });
 
 
 // brings z-index hierarchy of Modals forward with a click
 document.addEventListener('click', function(event) {
-      const isClickInsidetalkModal = talkModal.contains(event.target);
-      const isClickInsidewhatModal = whatModal.contains(event.target);
-      const isClickInsidetalkBtn = talkBtn.contains(event.target);
-      const isClickInsidewhatBtn = whatBtn.contains(event.target);
+      const isClickInsidetalkModal = talkModal.contains(event.target),
+      isClickInsidewhatModal = whatModal.contains(event.target),
+      isClickInsidetalkBtn = document.querySelector(".talkBtn").contains(event.target),
+      isClickInsidewhatBtn = document.querySelector(".whatBtn").contains(event.target);
       
       if (isClickInsidetalkModal || isClickInsidetalkBtn) {
             talkModal.style.zIndex = "3";
@@ -101,78 +169,53 @@ document.addEventListener('click', function(event) {
 });
 
 
-
-// When the user clicks on the NavBar button, open the modal
-talkBtn.onclick = function() {
-      talkModal.style.top = "10px";
-      talkModal.style.right = "0";
-      talkModal.style.bottom = "0";
-      talkModal.style.left = "430px";
-      talkModal.style.display = "block";
-};
-whatBtn.onclick = function() {
-      whatModal.style.top = "10px";
-      whatModal.style.right = "0";
-      whatModal.style.bottom = "0";
-      whatModal.style.left = "900px";
-      whatModal.style.display = "block";
-  };
-
-
 // When the user clicks on <span> (x), close the modal
 talkClose.onclick = function() {
       talkModal.style.display = "none";
-      talkModal.style.top = "10px";
+      talkModal.style.top = "100px";
       talkModal.style.right = "0";
       talkModal.style.bottom = "0";
       talkModal.style.left = "430px";
-      if (collectionPage.style.display !== "block") {
-            noModal();
-            if (talkModal.style.display !== "block" && (iModal.style.display !== "block" && whatModal.style.display !== "block")) {
-                  getTenItems();
-            } 
+      if (collectionPage.style.display !== "block" && talkModal.style.display !== "block" && (iModal.style.display !== "block" && whatModal.style.display !== "block")) {
+            getTenData();
+            loadCollectionPageStyle();
       }
 };
 whatClose.onclick = function() {
       whatModal.style.display = "none";
-      whatModal.style.top = "10px";
+      whatModal.style.top = "100px";
       whatModal.style.right = "0";
       whatModal.style.bottom = "0";
       whatModal.style.left = "900px";
-      if (collectionPage.style.display !== "block") {
-            noModal();
-            if (talkModal.style.display !== "block" && (iModal.style.display !== "block" && whatModal.style.display !== "block")) {
-                  getTenItems();
-            } 
+      if (collectionPage.style.display !== "block" && talkModal.style.display !== "block" && (iModal.style.display !== "block" && whatModal.style.display !== "block")) {
+            getTenData();
+            loadCollectionPageStyle();
       }
-}
+};
 
-/*
-// Textarea autoExpand
-document.addEventListener('input', function (event) {
-      if (event.target.tagName.toLowerCase() !== 'textarea') {
-          return;
-      }
-      autoExpand(event.target);
-}, false);
-*/
+
 
 var autoExpand = function(field){
       // Reset field height
       field.style.height = 'inherit';
-
+  
       // Get the computed styles for the element
       var computed = window.getComputedStyle(field);
-
+  
       // Calculate the height
       var height = parseInt(computed.getPropertyValue('border-top-width'), 10)
                   + parseInt(computed.getPropertyValue('padding-top'), 10)
                   + field.scrollHeight
                   + parseInt(computed.getPropertyValue('padding-bottom'), 10)
                   + parseInt(computed.getPropertyValue('border-bottom-width'), 10);
-
+  
         field.style.height = height + 'px';
-};
+  };
+
+document.addEventListener('input', function (event) {
+	if (event.target.tagName.toLowerCase() !== 'textarea') return;
+	autoExpand(event.target);
+}, false);
 
 
 //DRAGGABLE
@@ -214,51 +257,36 @@ function dragElement(elmnt) {
       };
 
       function closeDragElement() {
-            /* stop moving when mouse button is released:*/
+            // stop moving when mouse button is released:
             document.onmouseup = null;
             document.onmousemove = null;
       };
 };
 
+
+
 //ANSWER SUBMISSIONS and DATA STORAGE
 
   //Get four elements and assign them to variables.
-const form = document.getElementById("input-form");
-const inputText = document.getElementById("answer-text");
-//const inputCountry = document.getElementById("country");
-const sendBtn = document.querySelector(".sendBtn");
-const collectionBtn = document.getElementById("collectionBtn");
-const collectionPage = document.getElementById("collectionPage");
-const collection = document.getElementById("answer-collection");
+const form = document.getElementById("input-form"),
+inputText = document.getElementById("answer-text"),
+submitBtn = document.querySelector(".submitBtn"),
+collectionBtn = document.getElementById("collectionBtn"),
+collectionPage = document.getElementById("collectionPage"),
+collection = document.getElementById("answer-collection"),
+nomore = document.getElementById("nomore");
 
-function createDivs () {
-      //create divs for each data property
-      const divFill = document.createElement('div');
-      const divAnsw = document.createElement('div');
-   //   const divCoun = document.createElement('div');
-      const divDate = document.createElement('div');
-      const divUnit = document.createElement("div");
-      const row = document.createElement("div");
 
-      //css bootstrap
-      divFill.classList.add("col-md-5");
-      divAnsw.classList.add("col-md-5");
-      divAnsw.classList.add("answer");
-      row.classList.add("col-md-2");
-     // divCoun.classList.add("country");
-      divDate.classList.add("date");
-      divUnit.classList.add("row");
-      divUnit.classList.add("dataUnit");
-}
 
 // counts the text of input when typing
 function CountRemaining() {
       var stringCount = document.getElementById("answer-text").value.length;
-      document.getElementById("stringCounter").textContent = stringCount + "/600";
+      document.getElementById("stringCounter").textContent = stringCount + "/300";
       setTimeout(function(){ CountRemaining(); },0);
 };
 
 CountRemaining();
+
 
 
 
@@ -269,13 +297,13 @@ const sendHttpRequest = (method, url, data) => {
             const asynchronous = true;
       
             ajax.open(method, url, asynchronous);
-
+  
             ajax.responseType = 'json';
             
             if (data) {
                   ajax.setRequestHeader('Content', 'application/json');
             };
-
+  
             // receiving response from url
             ajax.onload = () => {
                   if (ajax.status >= 400) {
@@ -284,101 +312,80 @@ const sendHttpRequest = (method, url, data) => {
                         resolve(ajax.response);
                   }
             };
-
+  
             ajax.onerror = () => {
                   reject('Something went wrong!')
             };
-
+  
             // sending ajax request
             ajax.send(JSON.stringify(data));
       });
-
+  
       return promise;
 };
-
-var offsetCount  = 0;
-var last_id;
-var initialLoadKey = {key: false};
+  
+var offsetCount = 0, last_id;
 
 // GET LONG POLL
-function getNewData () {
+function getNewData() {
       $.ajax({
             type: "GET",
-            url: "includes/poll.php?_id="+_id,
+            url: "includes/ViewNewPoll.inc.php?_id="+_id,
             async: true,
             cache: false,
             timeout: 50000,
             success: function(data) {
                   console.log("data =", data);
-                  var json = eval('('+data+ ')');
+                  var json = eval('('+data+')');
                   if(json['msg'] != "") {
                         console.log("json =", json);
-                  }
+                  };
                   _id = json['_id'];
                   last_id = json['_id'];
                   console.log("last_id =", last_id);
 
                   if(collectionPage.style.display === "block") {
-                        if(initialLoadKey.key === false) {
-                              initGetTen();
+                        if(collection.classList.contains("initialLoad") === true) {
+                              getNineSinceLast_ID();
 
-                              const divFill = document.createElement('div');
-                              const divAnsw = document.createElement('div');
-                             // const divCoun = document.createElement('div');
-                              const divDate = document.createElement('div');
+                              //create divs for each data property
+                              const pAnsw = document.createElement('p');
+                              const pDate = document.createElement('p');
                               const divUnit = document.createElement("div");
-                              const row = document.createElement("div");
 
                               //css bootstrap
-                              divFill.classList.add("col-md-5");
-                              divAnsw.classList.add("col-md-5");
-                              divAnsw.classList.add("answer");
-                              row.classList.add("col-md-2");
-                              //divCoun.classList.add("country");
-                              divDate.classList.add("date");
-                              divUnit.classList.add("row");
                               divUnit.classList.add("dataUnit");
+                              pAnsw.classList.add("answer");
+                              pDate.classList.add("date");
 
                               //puts each item of data into a unit to display in HTML
-                              divAnsw.textContent = json['answer'];
-                             // divCoun.textContent = json['country'];
-                              divDate.textContent = json['date'];
+                              pAnsw.textContent = json['answer'];
+                              pDate.textContent = json['date'];
 
                               //combine data as one unit
-                              row.append(divDate);
-                              divUnit.append(divFill, divAnsw, row);
+                              divUnit.append(pAnsw, pDate);
                               
                               //prepend the new data to collection
                               collection.prepend(divUnit);
                               offsetCount += 1;
-                              initialLoadKey.key = true;
+                              collection.classList.remove("initialLoad");
                         } else {
                               //create divs for each data property
-                              const divFill = document.createElement('div');
-                              const divAnsw = document.createElement('div');
-                             // const divCoun = document.createElement('div');
-                              const divDate = document.createElement('div');
+                              const pAnsw = document.createElement('p');
+                              const pDate = document.createElement('p');
                               const divUnit = document.createElement("div");
-                              const row = document.createElement("div");
 
                               //css bootstrap
-                              divFill.classList.add("col-md-5");
-                              divAnsw.classList.add("col-md-5");
-                              divAnsw.classList.add("answer");
-                              row.classList.add("col-md-2");
-                           //   divCoun.classList.add("country");
-                              divDate.classList.add("date");
-                              divUnit.classList.add("row");
                               divUnit.classList.add("dataUnit");
+                              pAnsw.classList.add("answer");
+                              pDate.classList.add("date");
 
                               //puts each item of data into a unit to display in HTML
-                              divAnsw.textContent = json['answer'];
-                          //    divCoun.textContent = json['country'];
-                              divDate.textContent = json['date'];
+                              pAnsw.textContent = json['answer'];
+                              pDate.textContent = json['date'];
 
                               //combine data as one unit
-                              row.append(divDate);
-                              divUnit.append(divFill, divAnsw, row);
+                              divUnit.append(pAnsw, pDate);
                               
                               //prepend the new data to collection
                               collection.prepend(divUnit);
@@ -393,229 +400,189 @@ function getNewData () {
                   setTimeout('getNewData()', 15000);
             }
       });
-
 };
 $(document).ready(function(){
       getNewData();
 });
 
-
-const initGetTen = () => {
+const getNineSinceLast_ID = () => {
       $.ajax({ 
-              url: "includes/last_id.php",
-              data: { 'last_id': last_id },
-              type: 'POST',
-              async: true,
-              cache: false,
-              success: function(data) {
-                    console.log("initGetTen() =", data)
-                    var json = eval('('+data+ ')');
-                 //   last_id = json[0].id;
-                    for (var a = 0; a < json.length; a++){
+                  url: "includes/ViewNineSinceLast_ID.inc.php",
+                  data: { 'last_id': last_id },
+                  type: 'POST',
+                  async: true,
+                  cache: false,
+                  success: function(data) {
+                        console.log("getNineSinceLast_ID() =", data)
+                        var json = eval('('+data+ ')');
+                        for (var a = 0; a < json.length; a++){
                         var answer = json[a].answer;
-                    //    var country = json[a].country;
                         var date = json[a].date;
-      
+
                         //create divs for each data property
-                        const divFill = document.createElement('div');
-                        const divAnsw = document.createElement('div');
-                  //      const divCoun = document.createElement('div');
-                        const divDate = document.createElement('div');
+                        const pAnsw = document.createElement('p');
+                        const pDate = document.createElement('p');
                         const divUnit = document.createElement("div");
-                        const row = document.createElement("div");
-      
+
                         //css bootstrap
-                        divFill.classList.add("col-md-5");
-                        divAnsw.classList.add("col-md-5");
-                        divAnsw.classList.add("answer");
-                        row.classList.add("col-md-2");
-                   //     divCoun.classList.add("country");
-                        divDate.classList.add("date");
-                        divUnit.classList.add("row");
                         divUnit.classList.add("dataUnit");
+                        pAnsw.classList.add("answer");
+                        pDate.classList.add("date");
                         
                         //puts each item of data into a unit to display in HTML
-                        divAnsw.textContent = answer;
-                   //     divCoun.textContent = country;
-                        divDate.textContent = date;
-      
+                        pAnsw.textContent = answer;
+                        pDate.textContent = date;
+
                         //combine data as one unit
-                        row.append(divDate);
-                        divUnit.append(divFill, divAnsw, row);
+                        divUnit.append(pAnsw, pDate);
                         
                         //append 10 data to collection
                         collection.append(divUnit);
-                        console.log("appendedTen =", answer);
-                    }
-                    offsetCount += 9;
-              }
+                        offsetCount += 1;
+                        }
+                        
+                  }
       })
 };
 
 
 // GET Pagination by 10 items at a time
-const getTenItems = () => {
+const getTenData = () => {
       if (collectionPage.style.display === "block") {
             $.ajax({ 
-                  url: "includes/getTenItems_after_send.php",
+                  url: "includes/ViewTenData_a.inc.php",
                   data: { 'offsetCount': offsetCount },
                   type: 'POST',
                   async: true,
                   cache: false,
                   success: function(data) {
-                        console.log("getTenItems(); after send =", data)
+                        console.log("ViewTenData_a() =", data);
                         var json = eval('('+data+ ')');
-                        // last_id = json[json.length-1].id;
-                        for (var a = 0; a < json.length; a++){
-                              var answer = json[a].answer;
-                              //var country = json[a].country;
-                              var date = json[a].date;
-            
-                              //create divs for each data property
-                              const divFill = document.createElement('div');
-                              const divAnsw = document.createElement('div');
-                              //const divCoun = document.createElement('div');
-                              const divDate = document.createElement('div');
-                              const divUnit = document.createElement("div");
-                              const row = document.createElement("div");
-            
-                              //css bootstrap
-                              divFill.classList.add("col-md-5");
-                              divAnsw.classList.add("col-md-5");
-                              divAnsw.classList.add("answer");
-                              row.classList.add("col-md-2");
-                              //divCoun.classList.add("country");
-                              divDate.classList.add("date");
-                              divUnit.classList.add("row");
-                              divUnit.classList.add("dataUnit");
-                              
-                              //puts each item of data into a unit to display in HTML
-                              divAnsw.textContent = answer;
-                              //divCoun.textContent = country;
-                              divDate.textContent = date;
-            
-                              //combine data as one unit
-                              row.append(divDate);
-                              divUnit.append(divFill, divAnsw, row);
-                              
-                              //append 10 data to collection
-                              collection.append(divUnit);
-                              console.log("appendedTen =", answer);
+                        if (json.length <= 0){
+                              console.log("There is no more!");
+                              nomore.style.display = "block";
+                              setTimeout(function(){nomore.style.display = "none"}, 2000)
+                        } else {
+                              for (var a = 0; a < json.length; a++){
+
+                                    var answer = json[a].answer;
+                                    var date = json[a].date;
+                  
+                                    //create divs for each data property
+                                    const pAnsw = document.createElement('p');
+                                    const pDate = document.createElement('p');
+                                    const divUnit = document.createElement("div");
+                  
+                                    //css bootstrap
+                                    divUnit.classList.add("dataUnit");
+                                    pAnsw.classList.add("answer");
+                                    
+                                    //puts each item of data into a unit to display in HTML
+                                    pAnsw.textContent = answer;
+                                    pDate.textContent = date;
+                  
+                                    //combine data as one unit
+                                    divUnit.append(pAnsw, pDate);
+                                    
+                                    //append 10 data to collection
+                                    collection.append(divUnit);
+                                    offsetCount += 1;
+                              }
                         }
-                        offsetCount += 10;
+            //            console.log(offsetCount);
+
                   },
                   error: function(request, status, error){
-                        alert("Error: Could not proceed");
+                        console.log("Error: Could not proceed with getTenData_a()");
                   }
             });
       } else if (collectionPage.style.display !== "block") {
             $.ajax({ 
-                  url: "includes/getTenItems_w-o_send.php",
+                  url: "includes/ViewTenData_b.inc.php",
                   type: 'GET',
                   async: true,
                   cache: false,
                   success: function(data) {
-                        console.log("getTenItems(); w/o send =", data)
+                        console.log("ViewTenData_b() =", data);
                         var json = eval('('+data+ ')');
-                        // last_id = json[json.length-1].id;
-                        for (var a = 0; a < json.length; a++){
-                              var answer = json[a].answer;
-                           //   var country = json[a].country;
-                              var date = json[a].date;
-            
-                              //create divs for each data property
-                              const divFill = document.createElement('div');
-                              const divAnsw = document.createElement('div');
-                           //   const divCoun = document.createElement('div');
-                              const divDate = document.createElement('div');
-                              const divUnit = document.createElement("div");
-                              const row = document.createElement("div");
-            
-                              //css bootstrap
-                              divFill.classList.add("col-md-5");
-                              divAnsw.classList.add("col-md-5");
-                              divAnsw.classList.add("answer");
-                              row.classList.add("col-md-2");
-                         //     divCoun.classList.add("country");
-                              divDate.classList.add("date");
-                              divUnit.classList.add("row");
-                              divUnit.classList.add("dataUnit");
+                        if (json.length <= 0){
+                              console.log("There is no more!");
+                              nomore.style.display = "block";
+                              setTimeout(function(){nomore.style.display = "none"}, 2000)
+                        } else {
+                              collection.classList.remove("initialLoad");
+                              for (var a = 0; a < json.length; a++){
+                                    var answer = json[a].answer;
+                                    var date = json[a].date;
+                  
+                                    //create divs for each data property
+                                    const pAnsw = document.createElement('p');
+                                    const pDate = document.createElement('p');
+                                    const divUnit = document.createElement("div");
+   
+                                    //css bootstrap
+                                    divUnit.classList.add("dataUnit");
+                                    pAnsw.classList.add("answer");
+                                    pDate.classList.add("date");
+
+                                    
+                                    //puts each item of data into a unit to display in HTML
+                                    pAnsw.textContent = answer;
+                                    pDate.textContent = date;
+                  
+                                    //combine data as one unit
+                                    divUnit.append(pAnsw, pDate);
+                                    
+                                    //append 10 data to collection
+                                    collection.append(divUnit);
+            //                      console.log("appendedTen =", answer);
+                                    offsetCount += 1;
+                              } 
                               
-                              //puts each item of data into a unit to display in HTML
-                              divAnsw.textContent = answer;
-                         //     divCoun.textContent = country;
-                              divDate.textContent = date;
-            
-                              //combine data as one unit
-                              row.append(divDate);
-                              divUnit.append(divFill, divAnsw, row);
-                              
-                              //append 10 data to collection
-                              collection.append(divUnit);
-                              console.log("appendedTen =", answer);
-                        }
-                        offsetCount += 10;
+                        }  
+            //            console.log(offsetCount);
                   },
                   error: function(request, status, error){
-                        alert("Error: Could not proceed");
+                        console.log("Error: Could not proceed with getTenData_b()");
                   }
             });
       }
 };
-
 
 
 // GET Data Count
 const getDataCount = () => {
-      sendHttpRequest('GET', "includes/getDataCount.php").then(response => {
+      sendHttpRequest('GET', "includes/ViewDataCount.inc.php").then(response => {
             collectionBtn.textContent = response;
       })
 };
 
-/*
-const postData = () => {
-      sendHttpRequest('POST', 'includes/postItem.php', {'answer': inputText.value }
-      ).then(response => {
-            console.log(response);
-      }).catch(err => {
-            console.log(err);
-      });
-      return false;
-};
-*/
-/*
-const postData = () => {
-      if (inputText.value === null || inputText.value.match(/^ *$/) !== null) {
-            alert("Please share your desires!");
-            return;
-      } else { 
-            $.ajax({
-                  type: 'POST',
-                  url: 'includes/postItem.php',
-                  data: $('#input-form').serialize(),
-                  success: function(response){
-                        console.log("The answer", response);
-                  }
-            });
-      }
-      return false;
-};
-*/
 
 // POST DATA
 const postData = () => {
-      if (inputText.value === null || inputText.value.match(/^ *$/) !== null) {
-            alert("Please share your desires!");
+      if (inputText.value === null) {
+            
+            inputText.placeholder = "Please share your desires!";
+            setTimeout(function(){
+                  inputText.placeholder = "Write here ...";
+            }, 2000)
             return;
-      } else { 
+      } else if(inputText.value.match(/^ *$/) !== null) {
+            inputText.value = "";
+            inputText.placeholder = "Please share your desires!";
+            setTimeout(function(){
+                  inputText.placeholder = "Write here ...";
+            }, 2000)
+
+      }else { 
             $.ajax({
                   type: 'POST',
-                  url: 'includes/post.php',
+                  url: 'includes/ControlData.inc.php',
                   async: true,
                   cache: false,
                   data: {'answer': inputText.value },
                   success: function(response){
-                        console.log("The answer", response);
+                        console.log("The answer =", response);
                   }
             });
       }
@@ -623,14 +590,16 @@ const postData = () => {
 };
 
 
-// POST DATA => Trigger additional Functions when clicking sendBtn
-const clickSend = () => {
+// POST DATA => Trigger additional Functions when clicking submitBtn
+const clickSubmit = () => {
       if (inputText.value === null || inputText.value.match(/^ *$/) !== null) {
             return;
       } else {
             if (collectionPage.style.display !== "block") {
                  
                   talkModal.style.display = "none";
+                  whatModal.style.display = "none";
+                  iModal.style.display = "none";
                   noModal();
                   form.reset();
             } else if(collectionPage.style.display === "block") {
@@ -641,16 +610,36 @@ const clickSend = () => {
 };
 
 
-
 // Load the Collection Page
+
 collectionBtn.addEventListener('click', () => {
       if (collectionPage.style.display !== "block") {
-            getTenItems();
+            getTenData();
             loadCollectionPageStyle();
+
+      } else if (collectionPage.style.display === "block") {
+            collectionPage.scrollTo(0,0);
       }
 });
 
-//Load more content by loadBtn
-loadBtn.addEventListener('click', function(){
-      getTenItems();
+function newDataSeen() {
+      var collectionPageRect = collectionPage.getBoundingClientRect(),
+      collectionRect = collection.getBoundingClientRect(),
+      offset = collectionRect.top - collectionPageRect.top;
+      collection.addEventListener("scroll", function(){
+            console.log("collPage-Top =", collectionPageRect.top, "coll =", collectionRect.top, "offset =", offset);
+      });
+}
+newDataSeen();
+
+$("#inview").on('inview', function(event, isInView) {
+      if (isInView) {
+      // element is now visible in the viewport
+      $("#inview").css("visibility", "visible");
+      setTimeout(function(){
+            getTenData();
+            $("#inview").css("visibility", "hidden");
+      }, 1000)
+
+      } 
 });

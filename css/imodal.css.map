@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,OAAO,CAAC;EACJ,QAAQ,EAAE,KAAK;EACf,OAAO,EAAE,IAAI;EAAE,uBAAuB;EACtC,UAAU,EAAE,IAAI;EAChB,MAAM,EAAE,eAAe;EACvB,aAAa,EAAE,IAAI;EACnB,OAAO,EAAE,mBAAmB;EAC5B,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,KAAK;EACb,gBAAgB,EAAG,KAAK;EAAE,sBAAsB;EAChD,OAAO,EAAE,CAAC;CACX",
+    "sources": [
+        "imodal.scss",
+        "maincolor.scss"
+    ],
+    "names": [],
+    "file": "imodal.css"
+}

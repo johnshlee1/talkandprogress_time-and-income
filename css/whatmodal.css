@@ -1,0 +1,34 @@
+#whatModal {
+  position: fixed;
+  top: 100px;
+  right: 0;
+  bottom: 0;
+  left: 900px;
+  display: none;
+  /* hides by default */
+  border: 3px solid black;
+  border-radius: 15px;
+  width: 600px;
+  height: 500px;
+  background-color: white;
+  /* Black w/ opacity */
+  z-index: 1;
+}
+
+#whatModalHeader {
+  padding: 10px;
+  cursor: move;
+  background-color: #8000FF;
+  color: white;
+}
+
+.about p {
+  font-size: 25px;
+}
+
+#email {
+  color: #8000FF;
+  font-size: 25px;
+  padding-right: 50px;
+}
+/*# sourceMappingURL=whatmodal.css.map */
